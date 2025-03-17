@@ -123,7 +123,7 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       // re-enabling layout animations so that a drag reorder does not trigger it.
       setTimeout(() => {
         setLayoutAnimationDisabled(false);
-      }, 100);
+      }, 300);
     }
   }, [activeKey]);
 
