@@ -209,29 +209,19 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   });
 
   const onDragEnd = useStableCallback(
-  ({ from, to }: { from: number; to: number }) => {
-    const { onDragEnd, data } = props;
+    ({ from, to }: { from: number; to: number }) => {
+      const { onDragEnd, data } = props;
 
-    const newData = [...data];
-    if (from !== to) {
-      newData.splice(from, 1);
-      newData.splice(to, 0, data[from]);
-    }
-
-    // Update data before animation
-    onDragEnd?.({ from, to, data: newData });
-    
-    // Then animate to final position
-    touchTranslate.value = withSpring(
-      springTo,
-      animationConfigRef.value,
-      () => {
-        // Just reset after animation completes
-        runOnJS(reset)();
+      const newData = [...data];
+      if (from !== to) {
+        newData.splice(from, 1);
+        newData.splice(to, 0, data[from]);
       }
-    );
-  }
-);
+
+      onDragEnd?.({ from, to, data: newData });
+      reset();
+    }
+  );
 
   const onPlaceholderIndexChange = useStableCallback((index: number) => {
     props.onPlaceholderIndexChange?.(index);
